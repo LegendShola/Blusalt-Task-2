@@ -7,6 +7,9 @@ module.exports = defineConfig({
     specPattern: '**/*.feature', 
     // supportFile: 'cypress/support/index.js',
     supportFile: false,
+    "compilerOptions": {
+      "typeRoots": ["./node_modules/@types", "./typings"],
+    },
 
     setupNodeEvents(on, config) {
       // Cucumber file preprocessor
