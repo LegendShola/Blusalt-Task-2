@@ -1,7 +1,6 @@
 const cucumber = require('cypress-cucumber-preprocessor').default;
 const { defineConfig } = require('cypress');
-const merge = require('mochawesome-merge');
-const reportGenerator = require('mochawesome-report-generator');
+const merge = require('mochawesome-merge'); // No need for .default
 
 module.exports = defineConfig({
   e2e: {
@@ -18,6 +17,8 @@ module.exports = defineConfig({
         const report = await merge({
           files: ['./cypress/results/*.json']
         });
+        
+        const reportGenerator = require('mochawesome-report-generator'); // Import here
         await reportGenerator.create(report);
       });
     },
