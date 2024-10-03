@@ -1,7 +1,5 @@
 name: Blusalt task 2 Automation
 
-name: Cypress Test Automation
-
 on:
   push:
     branches:
