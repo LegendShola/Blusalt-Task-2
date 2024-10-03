@@ -1,28 +1,25 @@
-const cucumber = require('cypress-cucumber-preprocessor').default
-const { defineConfig } = require('cypress')
+const cucumber = require('cypress-cucumber-preprocessor').default;
+const { defineConfig } = require('cypress');
+const merge = require('mochawesome-merge');
+const reportGenerator = require('mochawesome-report-generator');
 
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'https://www.uitestingplayground.com',
-    specPattern: '**/*.feature', 
-    // supportFile: 'cypress/support/index.js',
+    specPattern: '**/*.feature',
     supportFile: false,
 
     setupNodeEvents(on, config) {
       // Cucumber file preprocessor
-      on('file:preprocessor', cucumber())
+      on('file:preprocessor', cucumber());
 
       // Generate test results in mochawesome format
-      on('after:run', () => {
-        return new Promise((resolve) => {
-          // Merge mochawesome reports after the run
-          resolve(require('mochawesome-merge')({
-            files: ['./cypress/results/*.json']
-          }))
-        }).then(report => {
-          require('mochawesome-report-generator').create(report)
-        })
-      })
+      on('after:run', async () => {
+        const report = await merge({
+          files: ['./cypress/results/*.json']
+        });
+        await reportGenerator.create(report);
+      });
     },
     defaultCommandTimeout: 20000,
     reporter: 'mochawesome',
@@ -36,4 +33,4 @@ module.exports = defineConfig({
   env: {
     TAGS: 'not @skip' // Exclude scenarios with @skip tag
   }
-})
+});
