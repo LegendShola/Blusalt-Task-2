@@ -1,6 +1,6 @@
 const cucumber = require('cypress-cucumber-preprocessor').default;
 const { defineConfig } = require('cypress');
-const merge = require('mochawesome-merge'); // No need for .default
+const merge = require('mochawesome-merge').default; // Ensure this is correct
 
 module.exports = defineConfig({
   e2e: {
@@ -14,12 +14,16 @@ module.exports = defineConfig({
 
       // Generate test results in mochawesome format
       on('after:run', async () => {
-        const report = await merge({
-          files: ['./cypress/results/*.json']
-        });
-        
-        const reportGenerator = require('mochawesome-report-generator'); // Import here
-        await reportGenerator.create(report);
+        try {
+          const report = await merge({
+            files: ['./cypress/results/*.json']
+          });
+
+          const reportGenerator = require('mochawesome-report-generator');
+          await reportGenerator.create(report);
+        } catch (error) {
+          console.error('Error merging reports:', error);
+        }
       });
     },
     defaultCommandTimeout: 20000,
