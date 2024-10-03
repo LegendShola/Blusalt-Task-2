@@ -33,4 +33,7 @@ module.exports = defineConfig({
       json: true,
     },
   },
+  env: {
+    TAGS: 'not @skip' // Exclude scenarios with @skip tag
+  }
 })
