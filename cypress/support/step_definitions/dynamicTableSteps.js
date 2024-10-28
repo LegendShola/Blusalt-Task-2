@@ -14,7 +14,7 @@ When('I get the CPU load value for Chrome from the table', () => {
   dynamicTablePage.getChromeCPULoad();   // Fetch the CPU load for Chrome
 });
 
-When('I retrieve the CPU load value from the yellow label', () => {
+And('I retrieve the CPU load value from the yellow label', () => {
   dynamicTablePage.getYellowLabelCPULoad();
 });
 
